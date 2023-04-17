@@ -21,7 +21,7 @@ class BaseModel:
                 self.created_at = datetime.strptime(self.created_at, time)
             if type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(self.updated_at, time)
-            self.__dict__.update(kwargs)
+
 
     def __str__(self):
         """Returns a string representation of the instance"""
