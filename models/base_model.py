@@ -22,7 +22,6 @@ class BaseModel:
             if type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(self.updated_at, time)
 
-
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
