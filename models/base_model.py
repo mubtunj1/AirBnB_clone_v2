@@ -2,6 +2,8 @@
 """This module defines a base class for all models in our hbnb clone"""
 import uuid
 from datetime import datetime
+from models import storage
+
 
 time = "%Y-%m-%dT%H:%M:%S.%f"
 
@@ -21,6 +23,7 @@ class BaseModel:
                 self.created_at = datetime.strptime(self.created_at, time)
             if type(self.updated_at) is str:
                 self.updated_at = datetime.strptime(self.updated_at, time)
+            self.__dict__.update(kwargs)
 
     def __str__(self):
         """Returns a string representation of the instance"""
@@ -29,7 +32,6 @@ class BaseModel:
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
-        from models import storage
         self.updated_at = datetime.now()
         storage.save()
 
