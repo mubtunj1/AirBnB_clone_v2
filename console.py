@@ -2,6 +2,7 @@
 """ Console Module """
 import cmd
 import sys
+import shlex
 from models.base_model import BaseModel
 from models.__init__ import storage
 from models.user import User
@@ -113,47 +114,79 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    def param_dic(self, args):
-        """Convert a list of parameters to a dictionary
-
-        Args:
-            args (list): A list of parameters of the form key=value
-        Returns:
-            dict: A dictionary of parameters
-        """
-        params = {}
-        for arg in args:
-            if "=" in arg:
-                param = arg.split("=")
-                key = param[0]
-                value = param[1]
-                if value[0] == '"' and value[-1] == '"':
-                    value = value[1:-1].replace("_", " ")
-                else:
-                    try:
-                        value = int(value)
-                    except ValueError:
-                        try:
-                            value = float(value)
-                        except ValueError:
-                            pass
-                params[key] = value
-        return params
-
     def do_create(self, args):
         """ Create an object of any class"""
-        arg = args.split()
-        if len(arg) == 0:
+        if len(args) == 0:
             print("** class name missing **")
             return
-        elif arg[0] not in HBNBCommand.classes:
+        try:
+            args_list = shlex.split(args)
+            # ['State', 'name=California']
+            new_dict = {}
+            for elem in args_list[1:]:
+                new_arg = elem.split("=")
+                # ['name', 'California']
+                new_dict[new_arg[0]] = new_arg[1]
+                # new_dict[name] = 'California'
+
+            new_instance = HBNBCommand.classes[args_list[0]]()
+            for key, value in new_dict.items():
+                if "_" in value:
+                    value = value.replace("_", " ")
+                else:
+                    try:
+                        value = eval(value)
+                    except BaseException:
+                        pass
+
+                if hasattr(new_instance, key):
+                    setattr(new_instance, key, value)
+            print(new_instance.id)
+            new_instance.save()
+        except Exception as e:
             print("** class doesn't exist **")
-            return
-        params = self.param_dic(arg[1:])
-        new_instance = HBNBCommand.classes[arg[0]](**params)
-        storage.new(new_instance)
-        storage.save()
-        print(new_instance.id)
+
+    # def param_dic(self, args):
+    #     """Convert a list of parameters to a dictionary
+
+    #     Args:
+    #         args (list): A list of parameters of the form key=value
+    #     Returns:
+    #         dict: A dictionary of parameters
+    #     """
+    #     params = {}
+    #     for arg in args:
+    #         if "=" in arg:
+    #             param = arg.split("=")
+    #             key = param[0]
+    #             value = param[1]
+    #             if value[0] == '"' and value[-1] == '"':
+    #                 value = value[1:-1].replace("_", " ")
+    #             else:
+    #                 try:
+    #                     value = int(value)
+    #                 except ValueError:
+    #                     try:
+    #                         value = float(value)
+    #                     except ValueError:
+    #                         pass
+    #             params[key] = value
+    #     return params
+
+    # def do_create(self, args):
+    #     """ Create an object of any class"""
+    #     arg = args.split()
+    #     if len(arg) == 0:
+    #         print("** class name missing **")
+    #         return
+    #     elif arg[0] not in HBNBCommand.classes:
+    #         print("** class doesn't exist **")
+    #         return
+    #     params = self.param_dic(arg[1:])
+    #     new_instance = HBNBCommand.classes[arg[0]](**params)
+    #     storage.new(new_instance)
+    #     storage.save()
+    #     print(new_instance.id)
 
     def help_create(self):
         """ Help information for the create method """
