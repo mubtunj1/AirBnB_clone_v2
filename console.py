@@ -113,28 +113,6 @@ class HBNBCommand(cmd.Cmd):
         """ Overrides the emptyline method of CMD """
         pass
 
-    # def do_create(self, args):
-    #     """ Create an object of any class"""
-    #     try:
-    #         if not args:
-    #             raise SyntaxError()
-    #         arg_list = args.split(" ")
-    #         kw = {}
-    #         for arg in arg_list[1:]:
-    #             arg_splited = arg.split("=")
-    #             arg_splited[1] = eval(arg_splited[1])
-    #             if type(arg_splited[1]) is str:
-    #                 arg_splited[1] = arg_splited[1].replace("_", " ")
-    #                 .replace('"', '\\"')
-    #             kw[arg_splited[0]] = arg_splited[1]
-    #     except SyntaxError:
-    #         print("** class name missing **")
-    #     except NameError:
-    #         print("** class doesn't exist **")
-    #     new_instance = HBNBCommand.classes[arg_list[0]](**kw)
-    #     new_instance.save()
-    #     print(new_instance.id)
-
     def param_dic(self, args):
         """Convert a list of parameters to a dictionary
 
