@@ -52,7 +52,7 @@ class FileStorage:
         """Serialize the file path to JSON file path"""
         dictionary = {}
         for key, value in self.__objects.items():
-                dictionary[key] = value.to_dict()
+            dictionary[key] = value.to_dict()
         with open(self.__file_path, 'w', encoding="UTF-8") as f:
             json.dump(dictionary, f)
 
@@ -61,8 +61,8 @@ class FileStorage:
         try:
             with open(self.__file_path, 'r', encoding="UTF-8") as f:
                 for key, value in (json.load(f)).items():
-                   value = eval(value["__class__"])(**value)
-                   self.__objects[key] = value
+                    value = eval(value["__class__"])(**value)
+                    self.__objects[key] = value
         except FileNotFoundError:
             pass
 
