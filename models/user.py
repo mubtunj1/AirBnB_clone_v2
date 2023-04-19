@@ -8,7 +8,7 @@ from models.place import Place
 from models.review import Review
 
 
-class User(BaseModel):
+class User(BaseModel, Base):
     """This class defines a user
     Attributes:
         email: email address
@@ -21,4 +21,5 @@ class User(BaseModel):
     password = Column(String(128), nullable=False)
     first_name = Column(String(128))
     last_name = Column(String(128))
-    
+    places = relationship("Place", cascade='all, delete, delete-orphan',
+                          backref="user")
