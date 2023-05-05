@@ -78,7 +78,7 @@ file { '/var/www':
 
 -> file { '/var/www/html/404.html':
     ensure  => 'present'
-    content => $nginx_conf
+    content => "Ceci n'est pas une page\n"
 }
 
 -> file { '/etc/nginx/sites-available/default':
