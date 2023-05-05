@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Sets up a web server for deployment of webstatic
+# Sets up a web server for deployment of webstatic content
 
 sudo apt-get update
 sudo apt-get install -y nginx
@@ -7,7 +7,7 @@ sudo apt-get install -y nginx
 mkdir -p /data/web_static/releases/test/
 mkdir -p /data/web_static/shared/
 echo "Holberton School" > /data/web_static/releases/test/index.html
-ln -sf /data/web-static/releases/test/ /data/web-static/current
+ln -sf /data/web-static/releases/test/ /data/web_static/current
 
 chown -R ubuntu /data/
 chgrp -R ubuntu /data/
