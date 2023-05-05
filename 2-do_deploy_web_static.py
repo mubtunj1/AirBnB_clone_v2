@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# Distribute an archive to web servers
+"""Distribute an archive to web servers"""
 import os.path
 from fabric.api import env, put, run
 
