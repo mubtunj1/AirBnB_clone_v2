@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""Distribute an archive to web servers"""
+"""Distributes an archive to web servers"""
 import os.path
 from fabric.api import env, put, run
 
@@ -7,10 +7,10 @@ from fabric.api import env, put, run
 env.hosts = ["100.26.153.75", "100.25.135.170"]
 
 
-def do_ploy(archive_path):
-    """Distribute an archive to web servers
+def do_deploy(archive_path):
+    """Distributes an archive to a web server
     Args:
-        archive_path (str): the path of the relative to distribute.
+        archive_path (str): the path of the archive to distribute.
     Returns:
         If the file doesn't exist return False else True.
     """
