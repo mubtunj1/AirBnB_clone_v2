@@ -7,6 +7,7 @@ from fabric.api import env, local, put, run
 
 env.hosts = ["54.146.66.65", "34.207.212.18"]
 
+
 def do_pack():
     """Creates a .tgz archive of the directory web_static"""
     date = datetime.utcnow()
@@ -66,4 +67,3 @@ def deploy():
     if file is None:
         return False
     return do_deploy(file)
-
