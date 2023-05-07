@@ -8,6 +8,7 @@ from time import strftime
 
 
 def do_pack():
+    """Create a .tgz archive of the directory web_static"""
     filename = strftime('%Y%m%d%H%M%S')
     try:
         local('mkdir -p versions')
