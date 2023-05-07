@@ -1,15 +1,16 @@
 #!/usr/bin/python3
-"""Creates and distributes an archive"""
 import os.path
 from datetime import datetime
-from fabric.api import env, local, put, run
+from fabric.api import env
+from fabric.api import local
+from fabric.api import put
+from fabric.api import run
 
-
-env.hosts = ["54.146.66.65", "34.207.212.18"]
+env.hosts = ['100.25.19.204', '54.157.159.85']
 
 
 def do_pack():
-    """Creates a .tgz archive of the directory web_static"""
+    """Create a tar gzipped archive of the directory web_static."""
     date = datetime.utcnow()
     file = "versions/web_static_{}{}{}{}{}{}.tgz".format(date.year,
                                                          date.month,
@@ -17,7 +18,6 @@ def do_pack():
                                                          date.hour,
                                                          date.minute,
                                                          date.second)
-
     if os.path.isdir("versions") is False:
         if local("mkdir -p versions").failed is True:
             return None
@@ -27,14 +27,19 @@ def do_pack():
 
 
 def do_deploy(archive_path):
-    """Distributes an archive to a web server"""
+    """Distributes an archive to a web server.
+    Args:
+        archive_path (str): The path of the archive to distribute.
+    Returns:
+        If the file doesn't exist at archive_path or an error occurs - False.
+        Otherwise - True.
+    """
     if os.path.isfile(archive_path) is False:
         return False
     file = archive_path.split("/")[-1]
-    name = archive_path.split(".")[0]
+    name = file.split(".")[0]
 
-    if put(archive_path, "/tmp/{}".
-           format(file)).failed is True:
+    if put(archive_path, "/tmp/{}".format(file)).failed is True:
         return False
     if run("rm -rf /data/web_static/releases/{}/".
            format(name)).failed is True:
@@ -62,7 +67,7 @@ def do_deploy(archive_path):
 
 
 def deploy():
-    """Create and distribute an archive to a web server"""
+    """Create and distribute an archive to a web server."""
     file = do_pack()
     if file is None:
         return False
