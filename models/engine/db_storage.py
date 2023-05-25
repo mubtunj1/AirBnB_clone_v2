@@ -13,7 +13,8 @@ from models.amenity import Amenity
 
 
 class DBStorage:
-    """This class manages the connection to the database and performs database operations."""
+    """This class manages the connection to the database
+    and performs database operations."""
 
     __engine = None
     __session = None
@@ -40,7 +41,8 @@ class DBStorage:
         Query all objects of a given class from the database.
 
         Args:
-            cls (class, optional): The class to query objects from. Defaults to None.
+            cls (class, optional): The class to query objects
+            from. Defaults to None.
 
         Returns:
             dict: A dictionary of objects mapped by their key.
@@ -95,4 +97,3 @@ class DBStorage:
     def close(self):
         """Close the current session."""
         self.__session.close()
-    
